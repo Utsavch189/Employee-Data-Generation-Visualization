@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'corsheaders',
     "app"
 ]
@@ -65,9 +66,9 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser'
     ],
     'EXCEPTION_HANDLER': 'middlewares.api_global_exception.custom_exception_handler',
-    # 'DEFAULT_THROTTLE_RATES': {
-    #     'rate': '1/minute'
-    # }
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '500/day',  
+    }
 }
 
 TEMPLATES = [

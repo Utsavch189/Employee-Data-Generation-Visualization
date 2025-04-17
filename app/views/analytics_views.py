@@ -4,8 +4,14 @@ from ..models import Salary, Attendance, Performance
 from django.db.models import Avg, Count
 from app.serializers import SalarySerializer,PerformanceSerializer
 from utils.decorators.jwt_cookie_authorization import login_required
+from rest_framework.throttling import UserRateThrottle
+
+class CustomThrottle(UserRateThrottle):
+    rate = '20/minute'
 
 class AverageSalaryView(APIView):
+
+    throttle_classes = [CustomThrottle]
 
     @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
@@ -16,6 +22,8 @@ class AverageSalaryView(APIView):
 
 class AttendanceSummaryView(APIView):
 
+    throttle_classes = [CustomThrottle]
+
     @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
         summary = Attendance.objects.values('status').annotate(count=Count('id'))
@@ -24,6 +32,8 @@ class AttendanceSummaryView(APIView):
         })
 
 class DepartmentWiseEmployeeCount(APIView):
+
+    throttle_classes = [CustomThrottle]
 
     @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
@@ -34,6 +44,8 @@ class DepartmentWiseEmployeeCount(APIView):
         })
 
 class PerformanceStatsView(APIView):
+
+    throttle_classes = [CustomThrottle]
 
     @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
@@ -50,6 +62,8 @@ class PerformanceStatsView(APIView):
         })
 
 class RecentSalariesView(APIView):
+
+    throttle_classes = [CustomThrottle]
 
     @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
