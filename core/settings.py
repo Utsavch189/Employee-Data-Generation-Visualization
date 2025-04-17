@@ -60,6 +60,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser'
+    ],
+    'EXCEPTION_HANDLER': 'middlewares.api_global_exception.custom_exception_handler',
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'rate': '1/minute'
+    # }
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

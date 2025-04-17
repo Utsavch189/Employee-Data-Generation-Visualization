@@ -3,8 +3,11 @@ from rest_framework.response import Response
 from ..models import Salary, Attendance, Performance
 from django.db.models import Avg, Count
 from app.serializers import SalarySerializer,PerformanceSerializer
+from utils.decorators.jwt_cookie_authorization import login_required
 
 class AverageSalaryView(APIView):
+
+    @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
         avg_salary = Salary.objects.aggregate(avg=Avg('net_salary'))
         return Response({
@@ -12,6 +15,8 @@ class AverageSalaryView(APIView):
         })
 
 class AttendanceSummaryView(APIView):
+
+    @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
         summary = Attendance.objects.values('status').annotate(count=Count('id'))
         return Response({
@@ -19,6 +24,8 @@ class AttendanceSummaryView(APIView):
         })
 
 class DepartmentWiseEmployeeCount(APIView):
+
+    @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
         salaries = Salary.objects.select_related('employee').order_by('employee__department')
         serialized = SalarySerializer(salaries, many=True)
@@ -27,6 +34,8 @@ class DepartmentWiseEmployeeCount(APIView):
         })
 
 class PerformanceStatsView(APIView):
+
+    @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
         stats = Performance.objects.aggregate(
             avg_rating=Avg('rating'),
@@ -41,6 +50,8 @@ class PerformanceStatsView(APIView):
         })
 
 class RecentSalariesView(APIView):
+
+    @login_required(redirect_url="/api/auth/login/",json_response=True)
     def get(self, request):
         salaries = Salary.objects.select_related('employee').order_by('-payment_date')[:10]
         serialized = SalarySerializer(salaries, many=True)
