@@ -11,6 +11,15 @@ pip install -r requirements.txt
 # Run the server
 python3 manage.py runserver
 
+# Run By docker
+docker-compose up -d
+
+# Stop docker
+docker-compose down
+
+# Application Address
+http://127.0.0.1:8000
+
 # Seeding Synthetic Data [Already seeded]
 python3 scripts.py
 
