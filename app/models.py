@@ -1,4 +1,15 @@
 from django.db import models
+from datetime import datetime
+
+class AdminUser(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
+    password = models.TextField()
+    registered_at = models.DateTimeField(default=datetime.now())
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
 
 class Employee(models.Model):
     GENDER_CHOICES = [('M', 'Male'), ('F', 'Female'), ('O', 'Other')]

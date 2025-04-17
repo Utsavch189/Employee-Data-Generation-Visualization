@@ -27,7 +27,7 @@ def generate_employees(n=5):
             first_name=first_name,
             last_name=last_name,
             email=fake.unique.email(),
-            phone_number=fake.phone_number(),
+            phone_number=fake.phone_number()[:15],
             gender=random_gender(),
             date_of_birth=fake.date_of_birth(minimum_age=22, maximum_age=50),
             join_date=fake.date_between(start_date='-2y', end_date='today'),
