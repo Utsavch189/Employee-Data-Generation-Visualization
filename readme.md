@@ -1,6 +1,6 @@
 # Clone the project
-git clone https://github.com/your-repo.git
-cd your-repo
+git clone https://github.com/Utsavch189/Employee-Data-Generation-Visualization
+cd Employee-Data-Generation-Visualization
 
 # Create virtualenv
 python3 -m venv env
